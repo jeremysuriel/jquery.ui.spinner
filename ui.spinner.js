@@ -50,8 +50,10 @@ $.widget('ui.spinner', {
 	// inputMaxLength - initial maxLength value on the input
 	// focused - this spinner currently has the focus
 
-	_init: function() {
+
+	_create: function() {
 		// shortcuts
+
 		var self = this,
 			input = self.element,
 			type = input.attr('type');
@@ -60,6 +62,8 @@ $.widget('ui.spinner', {
 			console.error('Invalid target for ui.spinner');
 			return;
 		}
+		
+		
 		
 		self._procOptions(true);
 		self._createButtons(input);
@@ -525,8 +529,8 @@ $.widget('ui.spinner', {
 	},
 	
 	// overrides _setData to force option parsing
-	_setData: function(key, value) {
-		$.widget.prototype._setData.call(this, key, value);
+	_setOptions: function(key, value) {
+		$.Widget.prototype._setOptions.call(this, key, value);
 		this._procOptions();
 	},
 	
@@ -583,7 +587,7 @@ $.widget('ui.spinner', {
 	enable: function() {
 		this.buttons.removeClass(disabled);
 		this.element[0].disabled = false;
-		$.widget.prototype.enable.call(this);
+		$.Widget.prototype.enable.call(this);
 	},
 	
 	disable: function() {
@@ -592,21 +596,21 @@ $.widget('ui.spinner', {
 			.removeClass(hover);
 			
 		this.element[0].disabled = true;
-		$.widget.prototype.disable.call(this);
+		$.Widget.prototype.disable.call(this);
 	},
 	
 	destroy: function(target) {
 		this.wrapper.remove();
 		this.element.unbind(eventNamespace).css({ width: this.oWidth, marginRight: this.oMargin });
 		
-		$.widget.prototype.destroy.call(this);
+		$.Widget.prototype.destroy.call(this);
 	}	
 });
 
-spinner = $.extend($.ui.spinner, {
+spinner = $.extend($.ui.spinner.prototype, {
 	version: '1.11',
 	getter: 'value',
-	defaults: {
+	options: {
 		min: null,
 		max: null,
 		allowNull: false,
